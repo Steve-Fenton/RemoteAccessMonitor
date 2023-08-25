@@ -1,0 +1,55 @@
+﻿<Window x:Class="RemoteAccessScanner.Monitor"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:UI="clr-namespace:UI;assembly=UI"
+    Title="Remote Access Monitor"
+    Height="300"
+    Width="450" 
+    Name="MonitorWindow"
+    DataContext="{Binding RelativeSource={RelativeSource Self}}">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Style.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid Margin="0" Name="MainGrid" Background="{StaticResource GlossyBlack_GlossGradient}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition Width="130"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <DockPanel Grid.Column="0" LastChildFill="True">
+            <UI:GIFImageControl Name="Working" AllowClickToPause="False" DockPanel.Dock="Bottom" Width="126" Height="22" Visibility="Hidden"/>
+            <TextBlock Name="WarningNote" TextWrapping="Wrap" DockPanel.Dock="Top" Margin="8"></TextBlock>
+            <TabControl Margin="0">
+                <TabItem Name="Events" Header="Events">
+                    <ListView ItemsSource="{Binding EventCollection}">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Time" DisplayMemberBinding="{Binding EventTime}" />
+                                <GridViewColumn Header="User"  DisplayMemberBinding="{Binding UserName}" />
+                                <GridViewColumn Header="Event Type" DisplayMemberBinding="{Binding EventType}" />
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </TabItem>
+                <TabItem Name="Connections" Header="Connections">
+                    <ListView ItemsSource="{Binding ConnectionCollection}">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="User" DisplayMemberBinding="{Binding UserName}" />
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </TabItem>
+            </TabControl>
+
+        </DockPanel>
+        <StackPanel Grid.Column="1" Margin="8">
+            <Button Name="StartStop" Content="Start" Click="StartStop_Click" Style="{StaticResource BlackGlossyButton}" Foreground="White" Margin="5" Height="40"></Button>
+            <Button Name="ClearEvents" Content="Delete Events" Click="ClearEvents_Click" Style="{StaticResource BlackGlossyButton}" Foreground="White" Margin="5" Height="40"></Button>
+            <Button Name="ClearAlert" Content="Clear Alert" Click="ClearAlert_Click" Style="{StaticResource BlackGlossyButton}" Foreground="White" Visibility="Collapsed" Margin="5" Height="40"></Button>
+        </StackPanel>
+    </Grid>
+</Window>
